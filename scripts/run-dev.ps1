@@ -10,15 +10,15 @@ $pidFile = Join-Path $projectRoot ".dev-server.pid"
 
 # Mata processo anterior se existir (ex.: reinício)
 if (Test-Path $pidFile) {
-    $oldPid = Get-Content $pidFile -ErrorAction SilentlyContinue
-    if ($oldPid) {
-        taskkill /PID $oldPid /T /F 2>$null
+    $savedPid = Get-Content $pidFile -ErrorAction SilentlyContinue
+    if ($savedPid) {
+        taskkill /PID $savedPid /T /F 2>$null
         Remove-Item $pidFile -Force -ErrorAction SilentlyContinue
     }
 }
 
 Set-Location $projectRoot
-$p = Start-Process -FilePath "pnpm" -ArgumentList "dev" -PassThru -NoNewWindow:$false
+$p = Start-Process -FilePath "cmd.exe" -ArgumentList "/k", "pnpm dev" -PassThru -NoNewWindow:$false
 $p.Id | Set-Content $pidFile
 Write-Host "Servidor iniciado (PID $($p.Id)). PID salvo em .dev-server.pid"
 Write-Host "Para puxar alteracoes do celular e reiniciar, execute: .\scripts\sync-and-restart.ps1"

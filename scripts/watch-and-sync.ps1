@@ -13,14 +13,14 @@ Set-Location $projectRoot
 
 function Restart-Server {
     if (Test-Path $pidFile) {
-        $pid = Get-Content $pidFile -ErrorAction SilentlyContinue
-        if ($pid) { taskkill /PID $pid /T /F 2>$null }
+        $savedPid = Get-Content $pidFile -ErrorAction SilentlyContinue
+        if ($savedPid) { taskkill /PID $savedPid /T /F 2>$null }
         Remove-Item $pidFile -Force -ErrorAction SilentlyContinue
     }
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] git pull..."
     git pull 2>&1 | Out-Host
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Reiniciando servidor..."
-    $p = Start-Process -FilePath "pnpm" -ArgumentList "dev" -PassThru -NoNewWindow:$false
+    $p = Start-Process -FilePath "cmd.exe" -ArgumentList "/k", "pnpm dev" -PassThru -NoNewWindow:$false
     $p.Id | Set-Content $pidFile
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Servidor reiniciado (PID $($p.Id))."
 }
@@ -34,10 +34,20 @@ function Has-NewCommits {
     return ($behind -and [int]$behind -gt 0)
 }
 
-# Inicia o servidor se ainda nao estiver rodando
-if (-not (Test-Path $pidFile)) {
-    Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Iniciando servidor pela primeira vez..."
-    $p = Start-Process -FilePath "pnpm" -ArgumentList "dev" -PassThru -NoNewWindow:$false
+# Verifica se o processo do PID file ainda esta rodando
+function Server-IsRunning {
+    if (-not (Test-Path $pidFile)) { return $false }
+    $savedPid = Get-Content $pidFile -ErrorAction SilentlyContinue
+    if (-not $savedPid) { return $false }
+    $proc = Get-Process -Id $savedPid -ErrorAction SilentlyContinue
+    return ($null -ne $proc)
+}
+
+# Inicia o servidor se ainda nao estiver rodando (ou se o processo morreu)
+if (-not (Server-IsRunning)) {
+    if (Test-Path $pidFile) { Remove-Item $pidFile -Force -ErrorAction SilentlyContinue }
+    Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Iniciando servidor..."
+    $p = Start-Process -FilePath "cmd.exe" -ArgumentList "/k", "pnpm dev" -PassThru -NoNewWindow:$false
     $p.Id | Set-Content $pidFile
     Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Servidor iniciado (PID $($p.Id)). Monitorando pushes a cada ${intervalSeconds}s..."
 } else {

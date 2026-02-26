@@ -38,7 +38,7 @@ Deixe essa janela aberta. No celular: edite no Cursor, peça **commit + push**. 
 
    Isso abre uma janela com o servidor rodando e salva o PID em `.dev-server.pid`.
 
-2. Deixe o PC ligado e acesse a landing pelo celular (ex.: `http://IP-DO-PC:5173` se estiver usando Vite em modo dev).
+2. Deixe o PC ligado e acesse a landing pelo celular (ex.: `http://IP-DO-PC:5177` se estiver usando Vite em modo dev).
 
 ### No celular
 

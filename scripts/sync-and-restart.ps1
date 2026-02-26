@@ -11,10 +11,10 @@ Set-Location $projectRoot
 
 # 1. Mata o servidor atual (se foi iniciado com run-dev.ps1)
 if (Test-Path $pidFile) {
-    $pid = Get-Content $pidFile -ErrorAction SilentlyContinue
-    if ($pid) {
-        Write-Host "Parando servidor (PID $pid)..."
-        taskkill /PID $pid /T /F 2>$null
+    $savedPid = Get-Content $pidFile -ErrorAction SilentlyContinue
+    if ($savedPid) {
+        Write-Host "Parando servidor (PID $savedPid)..."
+        taskkill /PID $savedPid /T /F 2>$null
     }
     Remove-Item $pidFile -Force -ErrorAction SilentlyContinue
 }
@@ -26,7 +26,7 @@ Write-Host $pullResult
 
 # 3. Reinicia o servidor
 Write-Host "Reiniciando servidor..."
-$p = Start-Process -FilePath "pnpm" -ArgumentList "dev" -PassThru -NoNewWindow:$false
+$p = Start-Process -FilePath "cmd.exe" -ArgumentList "/k", "pnpm dev" -PassThru -NoNewWindow:$false
 $p.Id | Set-Content $pidFile
 Write-Host "Servidor reiniciado (PID $($p.Id))."
 Write-Host "Pronto. Acesse a landing pelo celular para ver as alteracoes."
