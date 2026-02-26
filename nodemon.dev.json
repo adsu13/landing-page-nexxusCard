@@ -1,0 +1,6 @@
+{
+  "exec": "vite --host",
+  "watch": ["vite.config.ts", "package.json"],
+  "ext": "ts,json",
+  "delay": "500"
+}
