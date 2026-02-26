@@ -286,8 +286,8 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Stats */}
-            <div className="flex flex-wrap gap-3 sm:gap-4">
+            {/* Stats - 3 colunas na mesma linha em mobile e desktop */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {[
                 { label: "Latência API", value: "< 200ms", icon: Zap, accent: "cyan" },
                 { label: "Transações", value: "500K+", icon: BarChart3, accent: "cyan" },
@@ -298,14 +298,14 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + i * 0.1 }}
-                  className="group flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300"
+                  className="group flex items-center gap-1.5 sm:gap-3 px-2 py-2 sm:px-4 sm:py-3 rounded-lg sm:rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 min-w-0"
                 >
-                  <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
+                  <div className={`flex shrink-0 items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
                     <stat.icon size={20} />
                   </div>
-                  <div>
-                    <div className="text-xl md:text-2xl font-bold text-white tabular-nums">{stat.value}</div>
-                    <div className="text-xs text-white/50 font-medium">{stat.label}</div>
+                  <div className="min-w-0">
+                    <div className="text-sm sm:text-xl md:text-2xl font-bold text-white tabular-nums truncate">{stat.value}</div>
+                    <div className="text-[10px] sm:text-xs text-white/50 font-medium truncate">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}
@@ -349,61 +349,6 @@ export default function Home() {
             </motion.div>
           ))}
         </div>
-
-        {/* Flow diagram */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          viewport={{ once: true }}
-          className="neon-card p-8 mt-12"
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center">
-            <div className="flex-1">
-              <div className="feature-icon mx-auto mb-3">
-                <MessageCircle size={24} className="text-purple-400" />
-              </div>
-              <h4 className="text-white font-semibold mb-1">Bot Telegram</h4>
-              <p className="text-white/60 text-sm">Donos & Clientes</p>
-            </div>
-
-            <div className="hidden md:block text-cyan-400">
-              <ArrowRight size={32} />
-            </div>
-
-            <div className="flex-1">
-              <div className="feature-icon mx-auto mb-3">
-                <Globe size={24} className="text-cyan-400" />
-              </div>
-              <h4 className="text-white font-semibold mb-1">Base Web</h4>
-              <p className="text-white/60 text-sm">Clientes</p>
-            </div>
-
-            <div className="hidden md:block text-cyan-400">
-              <ArrowRight size={32} />
-            </div>
-
-            <div className="flex-1">
-              <div className="feature-icon mx-auto mb-3">
-                <Layout size={24} className="text-purple-400" />
-              </div>
-              <h4 className="text-white font-semibold mb-1">Admin Web</h4>
-              <p className="text-white/60 text-sm">Donos</p>
-            </div>
-
-            <div className="hidden md:block text-cyan-400">
-              <ArrowRight size={32} />
-            </div>
-
-            <div className="flex-1">
-              <div className="feature-icon mx-auto mb-3">
-                <Layers size={24} className="text-cyan-400" />
-              </div>
-              <h4 className="text-white font-semibold mb-1">API Backend</h4>
-              <p className="text-white/60 text-sm">Compartilhada</p>
-            </div>
-          </div>
-        </motion.div>
       </section>
 
       {/* Features Section */}
@@ -528,7 +473,7 @@ export default function Home() {
           className="mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Gates e APIs de Pagamento
+          Infraestrutura de Gates
           </h2>
           <p className="text-white/60 text-lg max-w-2xl">
             Hospedagem integrada e APIs padrão de adquirentes desenvolvidas no store-center.
@@ -550,7 +495,8 @@ export default function Home() {
               Hospedagem de gates no servidor do bot
             </h3>
             <p className="text-white/70 leading-relaxed mb-4">
-              As gates rodam no mesmo servidor da sua aplicação e do bot Telegram. Sem dependência de terceiros para hospedagem: você controla infraestrutura, latência e custos com tudo em um único ambiente.
+            As gates podem ser adicionadas em formato .php e executadas no mesmo servidor da aplicação e do bot Telegram.
+            Tudo centralizado em um único ambiente, com mais controle, menor latência e sem dependência de hospedagens externas.
             </p>
             <ul className="space-y-2 text-white/60 text-sm">
               <li className="flex items-center gap-2">
@@ -559,7 +505,7 @@ export default function Home() {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-cyan-400 flex-shrink-0" />
-                Deploy e atualizações centralizados
+                Execução integrada com bot e API
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-cyan-400 flex-shrink-0" />
@@ -582,10 +528,10 @@ export default function Home() {
               APIs padrão de keys (adquirentes)
             </h3>
             <p className="text-white/70 leading-relaxed mb-4">
-              Integrações prontas com as APIs oficiais de adquirentes, desenvolvidas no store-center: Rede (Elo), Cielo, Pagar.me e Braspag. Padrão de keys unificado para conectar sua loja aos gateways de pagamento.
+              Integrações prontas com as APIs oficiais de adquirentes, desenvolvidas no store-center: E-Rede, Cielo, Pagar.me e Braspag. Padrão de keys unificado para facilitar a ativação, diminuir erros e acelerar a operação.
             </p>
             <div className="flex flex-wrap gap-2">
-              {["Rede (Elo)", "Cielo", "Pagar.me", "Braspag"].map((name) => (
+              {["E-Rede", "Cielo", "Pagar.me", "Braspag"].map((name) => (
                 <span
                   key={name}
                   className="px-3 py-1.5 rounded-lg bg-white/10 text-white/90 text-sm font-medium border border-cyan-500/30"
