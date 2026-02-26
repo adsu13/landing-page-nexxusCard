@@ -154,9 +154,36 @@ function vitePluginManusDebugCollector(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector()];
+/** Copia index.html → 404.html no build (para SPA no GitHub Pages) */
+function vitePluginCopy404(): Plugin {
+  let outDir: string;
+  return {
+    name: "copy-404",
+    configResolved(config) {
+      outDir = config.build.outDir;
+    },
+    closeBundle() {
+      const index = path.join(outDir, "index.html");
+      const notFound = path.join(outDir, "404.html");
+      if (fs.existsSync(index)) fs.copyFileSync(index, notFound);
+    },
+  };
+}
+
+const plugins = [
+  react(),
+  tailwindcss(),
+  jsxLocPlugin(),
+  vitePluginManusRuntime(),
+  vitePluginManusDebugCollector(),
+  vitePluginCopy404(),
+];
+
+// Para GitHub Pages: base = /nome-do-repo/ (a URL será https://usuario.github.io/nome-do-repo/)
+const base = process.env.VITE_BASE ?? "/";
 
 export default defineConfig({
+  base,
   plugins,
   resolve: {
     alias: {
