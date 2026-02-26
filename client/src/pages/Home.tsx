@@ -292,25 +292,45 @@ export default function Home() {
                 { label: "Latência API", value: "< 200ms", icon: Zap, accent: "cyan" },
                 { label: "Transações", value: "500K+", icon: BarChart3, accent: "cyan" },
                 { label: "Uptime", value: "99.9%", icon: Activity, accent: "purple" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className={`group w-full min-w-0 flex flex-col items-start gap-2 px-3 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 sm:flex-row sm:items-center sm:gap-3 sm:px-4 ${
-                    i === 2 ? "col-span-2 justify-self-center max-w-[12.5rem] sm:col-auto sm:max-w-none" : ""
-                  }`}
-                >
-                  <div className={`flex items-center justify-center w-9 h-9 rounded-lg sm:w-10 sm:h-10 ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
-                    <stat.icon size={20} />
-                  </div>
-                  <div>
-                    <div className="text-base sm:text-xl md:text-2xl font-bold text-white tabular-nums leading-tight whitespace-nowrap">{stat.value}</div>
-                    <div className="text-[11px] sm:text-xs text-white/50 font-medium leading-tight truncate">{stat.label}</div>
-                  </div>
-                </motion.div>
-              ))}
+              ].map((stat, i) => {
+                if (i === 2) {
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + i * 0.1 }}
+                      className="group w-full sm:w-auto min-w-0 flex flex-col items-start gap-2 px-3 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 sm:flex-row sm:items-center sm:gap-3 sm:px-4 col-span-2 justify-self-center max-w-[12.5rem] sm:col-auto sm:justify-self-auto sm:max-w-none"
+                    >
+                      <div className={`flex items-center justify-center w-9 h-9 rounded-lg sm:w-10 sm:h-10 ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
+                        <stat.icon size={20} />
+                      </div>
+                      <div>
+                        <div className="text-base sm:text-xl md:text-2xl font-bold text-white tabular-nums leading-tight whitespace-nowrap">{stat.value}</div>
+                        <div className="text-[11px] sm:text-xs text-white/50 font-medium leading-tight truncate">{stat.label}</div>
+                      </div>
+                    </motion.div>
+                  );
+                }
+
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + i * 0.1 }}
+                    className="group w-full sm:w-auto min-w-0 flex flex-col items-start gap-2 px-3 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 sm:flex-row sm:items-center sm:gap-3 sm:px-4"
+                  >
+                    <div className={`flex items-center justify-center w-9 h-9 rounded-lg sm:w-10 sm:h-10 ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
+                      <stat.icon size={20} />
+                    </div>
+                    <div>
+                      <div className="text-base sm:text-xl md:text-2xl font-bold text-white tabular-nums leading-tight whitespace-nowrap">{stat.value}</div>
+                      <div className="text-[11px] sm:text-xs text-white/50 font-medium leading-tight truncate">{stat.label}</div>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </div>
