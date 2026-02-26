@@ -287,7 +287,7 @@ export default function Home() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-4">
+            <div className="flex flex-nowrap gap-2 sm:gap-4">
               {[
                 { label: "Latência API", value: "< 200ms", icon: Zap, accent: "cyan" },
                 { label: "Transações", value: "500K+", icon: BarChart3, accent: "cyan" },
@@ -298,14 +298,14 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + i * 0.1 }}
-                  className="group min-w-0 flex flex-col items-start gap-2 px-3 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 sm:flex-row sm:items-center sm:gap-3 sm:px-4"
+                  className="group flex-1 min-w-0 flex flex-col items-start gap-2 px-3 py-3 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm hover:border-purple-500/40 hover:bg-white/[0.08] transition-all duration-300 sm:flex-row sm:items-center sm:gap-3 sm:px-4"
                 >
                   <div className={`flex items-center justify-center w-9 h-9 rounded-lg sm:w-10 sm:h-10 ${stat.accent === "cyan" ? "bg-cyan-500/20 text-cyan-400" : "bg-purple-500/20 text-purple-400"}`}>
                     <stat.icon size={20} />
                   </div>
                   <div>
                     <div className="text-base sm:text-xl md:text-2xl font-bold text-white tabular-nums leading-tight whitespace-nowrap">{stat.value}</div>
-                    <div className="text-[11px] sm:text-xs text-white/50 font-medium leading-tight">{stat.label}</div>
+                    <div className="text-[11px] sm:text-xs text-white/50 font-medium leading-tight truncate">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}
