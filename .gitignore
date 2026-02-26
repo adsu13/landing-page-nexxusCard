@@ -42,6 +42,7 @@ lerna-debug.log*
 # Runtime data
 pids
 *.pid
+.dev-server.pid
 *.seed
 *.pid.lock
 
